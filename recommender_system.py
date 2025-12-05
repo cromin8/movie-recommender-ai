@@ -15,6 +15,19 @@ import urllib.parse # Required for generating links
 # ==========================================
 st.set_page_config(page_title="Streamline - AI Recommender", layout="wide", initial_sidebar_state="expanded")
 
+# --- SIGNATURE: CROMIN ---
+# UPDATED: Moved to TOP RIGHT corner (below header to avoid overlap)
+st.markdown("""
+    <div style='position: fixed; top: 90px; right: 20px; z-index: 10000; 
+    font-family: "Segoe UI", sans-serif; font-weight: 900; font-size: 1.2rem; 
+    color: #00d2ff; text-shadow: 0px 0px 5px rgba(0, 210, 255, 0.6); 
+    background-color: rgba(15, 23, 42, 0.5); padding: 5px 15px; 
+    border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); 
+    pointer-events: none;'>
+        CROMIN
+    </div>
+""", unsafe_allow_html=True)
+
 # Custom CSS for a professional look with Background Image
 st.markdown("""
     <style>
@@ -160,126 +173,130 @@ def get_smart_link(title, type='movie'):
 
 @st.cache_data
 def load_movie_data():
-    """Expanded Database for Movies (Western, Indian, Anime)"""
-    titles = [
-        # Western (1-20)
-        'The Matrix', 'Inception', 'Toy Story', 'Finding Nemo', 'The Godfather', 
-        'Pulp Fiction', 'Interstellar', 'John Wick', 'Up', 'Fight Club',
-        'The Dark Knight', 'Spirited Away', 'Parasite', 'Avengers: Endgame', 'Joker',
-        'Titanic', 'Avatar', 'The Lion King', 'Gladiator', 'Forrest Gump',
-        # Indian (21-50)
-        '3 Idiots', 'RRR', 'Dangal', 'Sholay', 'Lagaan',
-        'Baahubali', 'Kantara', 'Zindagi Na Milegi Dobara', 'Gully Boy', 'Drishyam',
-        'Dilwale Dulhania Le Jayenge', 'Swades', 'Chak De India', 'Queen', 'Andhadhun',
-        'Gangs of Wasseypur', 'PK', 'Bajrangi Bhaijaan', 'K.G.F', 'Pushpa',
-        'Taare Zameen Par', 'Munna Bhai MBBS', 'Hera Pheri', 'Drishyam 2', 'Animal',
-        'Jawan', 'Pathaan', 'Stree', 'Tumbbad', '12th Fail',
-        # Anime (51-60)
-        'Your Name', 'Demon Slayer: Mugen Train', 'Jujutsu Kaisen 0', 'Weathering with You', 'Suzume',
-        'A Silent Voice', 'My Neighbor Totoro', 'Attack on Titan: Chronicle', 'One Piece Film: Red', 'Naruto: The Last'
+    """Expanded Database for Movies (Western, Indian, Anime) - 150 Items"""
+    
+    # 50 Western Movies
+    western_titles = [
+        'The Matrix', 'Inception', 'Toy Story', 'Finding Nemo', 'The Godfather', 'Pulp Fiction', 'Interstellar', 'John Wick', 'Up', 'Fight Club',
+        'The Dark Knight', 'Spirited Away', 'Parasite', 'Avengers: Endgame', 'Joker', 'Titanic', 'Avatar', 'The Lion King', 'Gladiator', 'Forrest Gump',
+        'Dune: Part Two', 'Oppenheimer', 'Barbie', 'Spider-Man: Across the Spider-Verse', 'The Batman', 'Top Gun: Maverick', 'Everything Everywhere All At Once', 'Knives Out', 'Mad Max: Fury Road', 'Logan',
+        'Deadpool', 'Guardians of the Galaxy', 'Black Panther', 'Iron Man', 'Thor: Ragnarok', 'Captain America: Civil War', 'Doctor Strange', 'Ant-Man', 'The Avengers', 'Wonder Woman',
+        'Harry Potter and the Sorcerer\'s Stone', 'The Lord of the Rings: The Fellowship of the Ring', 'Star Wars: A New Hope', 'Jurassic Park', 'Back to the Future', 'The Shawshank Redemption', 'Schindler\'s List', 'Goodfellas', 'Saving Private Ryan', 'The Silence of the Lambs'
     ]
     
+    # 50 Indian Movies
+    indian_titles = [
+        '3 Idiots', 'RRR', 'Dangal', 'Sholay', 'Lagaan', 'Baahubali: The Beginning', 'Baahubali 2: The Conclusion', 'Kantara', 'Zindagi Na Milegi Dobara', 'Gully Boy',
+        'Drishyam', 'Dilwale Dulhania Le Jayenge', 'Swades', 'Chak De! India', 'Queen', 'Andhadhun', 'Gangs of Wasseypur', 'PK', 'Bajrangi Bhaijaan', 'K.G.F: Chapter 1',
+        'K.G.F: Chapter 2', 'Pushpa: The Rise', 'Taare Zameen Par', 'Munna Bhai M.B.B.S.', 'Hera Pheri', 'Drishyam 2', 'Animal', 'Jawan', 'Pathaan', 'Stree',
+        'Tumbbad', '12th Fail', 'Vikram', 'Kaithi', 'Master', 'Leo', 'Jailer', 'Salaar', 'Sita Ramam', 'Hi Nanna',
+        'Sanju', 'Uri: The Surgical Strike', 'Article 15', 'Badhaai Ho', 'Chhichhore', 'Super 30', 'Kabir Singh', 'War', 'Tanhaji', 'Bhool Bhulaiyaa 2'
+    ]
+    
+    # 50 Anime Movies/Series (Treated as titles)
+    anime_titles = [
+        'Your Name', 'Demon Slayer: Mugen Train', 'Jujutsu Kaisen 0', 'Weathering with You', 'Suzume', 'A Silent Voice', 'My Neighbor Totoro', 'Attack on Titan: Chronicle', 'One Piece Film: Red', 'Naruto: The Last',
+        'Spirited Away', 'Howl\'s Moving Castle', 'Princess Mononoke', 'Akira', 'Ghost in the Shell', 'Cowboy Bebop: The Movie', 'Evangelion: 3.0+1.0 Thrice Upon a Time', 'The Girl Who Leapt Through Time', 'Wolf Children', '5 Centimeters Per Second',
+        'Dragon Ball Super: Broly', 'Dragon Ball Super: Super Hero', 'One Piece: Stampede', 'My Hero Academia: Heroes Rising', 'Hunter x Hunter: The Last Mission', 'Bleach: Hell Verse', 'Fullmetal Alchemist: The Conqueror of Shamballa', 'Violet Evergarden: The Movie', 'I Want to Eat Your Pancreas', 'Perfect Blue',
+        'Paprika', 'Tokyo Godfathers', 'The Boy and the Heron', 'Grave of the Fireflies', 'Ponyo', 'Kiki\'s Delivery Service', 'Castle in the Sky', 'Nausicaä of the Valley of the Wind', 'Summer Wars', 'Redline',
+        'Sword Art Online: Ordinal Scale', 'No Game No Life: Zero', 'Rascal Does Not Dream of a Dreaming Girl', 'Josee, the Tiger and the Fish', 'Words Bubble Up Like Soda Pop', 'Belle', 'Promare', 'Ninja Scroll', 'Vampire Hunter D: Bloodlust', 'Steins;Gate: The Movie'
+    ]
+    
+    all_titles = western_titles + indian_titles + anime_titles
+    
+    # Generate Features roughly
+    western_features = ['Sci-Fi Action Adventure'] * 10 + ['Drama Crime Thriller'] * 10 + ['Action Superhero Sci-Fi'] * 20 + ['Classic Drama Adventure'] * 10
+    indian_features = ['Bollywood Drama Comedy'] * 15 + ['Action Thriller Crime'] * 15 + ['Romance Drama Musical'] * 10 + ['Historical Epic Action'] * 10
+    anime_features = ['Anime Romance Fantasy'] * 15 + ['Anime Action Supernatural'] * 20 + ['Anime Sci-Fi Mecha'] * 5 + ['Anime Drama Slice-of-Life'] * 10
+    
+    all_features = western_features + indian_features + anime_features
+    all_regions = ['Western'] * 50 + ['Indian'] * 50 + ['Anime'] * 50
+    
     items = pd.DataFrame({
-        'item_id': range(1, 61),
-        'title': titles,
-        'features': [
-            # Western
-            'Sci-Fi Action', 'Sci-Fi Thriller', 'Animation Children', 'Animation Children', 'Crime Drama', 
-            'Crime Drama', 'Sci-Fi Drama', 'Action Thriller', 'Animation Drama', 'Drama Thriller',
-            'Action Crime', 'Animation Fantasy', 'Thriller Drama', 'Action Sci-Fi', 'Crime Drama',
-            'Romance Drama Epic', 'Sci-Fi Adventure', 'Animation Musical', 'Action Historical', 'Drama Romance',
-            # Indian
-            'Comedy Drama Education', 'Action Historical Epic', 'Sports Drama Biopic', 'Action Adventure Classic', 'Sports Drama Historical',
-            'Action Epic Fantasy', 'Thriller Folklore Mystical', 'Adventure Comedy Road', 'Music Drama Rap', 'Thriller Mystery Crime',
-            'Romance Drama Classic', 'Drama Social Patriotic', 'Sports Drama Patriotic', 'Comedy Drama Travel', 'Thriller Crime Dark',
-            'Crime Action Grit', 'Comedy Sci-Fi Satire', 'Drama Comedy Heartfelt', 'Action Crime Gold', 'Action Crime Smuggling',
-            'Drama Education Emotional', 'Comedy Drama Medical', 'Comedy Classic Cult', 'Thriller Mystery Sequel', 'Action Drama Violent',
-            'Action Thriller Mass', 'Action Spy Blockbuster', 'Horror Comedy', 'Horror Fantasy Atmospheric', 'Drama Inspiration Biopic',
-            # Anime
-            'Anime Romance Fantasy', 'Anime Action Demon', 'Anime Action Supernatural', 'Anime Romance Fantasy', 'Anime Adventure Fantasy',
-            'Anime Drama Romance', 'Anime Fantasy Family', 'Anime Action Titan', 'Anime Action Pirate', 'Anime Ninja Action'
-        ],
-        'region': ['Western']*20 + ['Indian']*30 + ['Anime']*10,
-        'link': [get_smart_link(t, 'movie') for t in titles]
+        'item_id': range(1, 151),
+        'title': all_titles,
+        'features': all_features, 
+        'region': all_regions,
+        'link': [get_smart_link(t, 'movie') for t in all_titles]
     })
+    
+    items['features'] = items.apply(lambda x: x['features'] + " " + x['region'], axis=1)
     
     ratings = generate_ratings(items)
     return items, ratings
 
 @st.cache_data
 def load_music_data():
-    """Expanded Database for Music (Western, Indian + Punjabi)"""
-    titles = [
-        # Western (101-120)
-        'Bohemian Rhapsody', 'Shape of You', 'Smells Like Teen Spirit', 'Hotel California', 'Blinding Lights',
-        'Rolling in the Deep', 'Billie Jean', 'Sicko Mode', 'Imagine', 'Lose Yourself',
-        'Uptown Funk', 'Someone Like You', 'Despacito', 'Believer', 'Starboy',
-        'Hips Don\'t Lie', 'Viva La Vida', 'Thinking Out Loud', 'Bad Guy', 'Levitating',
-        # Indian (121-150)
-        'Kesariya', 'Jai Ho', 'Naatu Naatu', 'Tum Hi Ho', 'Kun Faya Kun',
-        'Apna Time Aayega', 'Chaiyya Chaiyya', 'Kabira', 'Kal Ho Naa Ho', 'Pasoori',
-        'Dil Diyan Gallan', 'Raabta', 'Ilahi', 'Agar Tum Saath Ho', 'Channa Mereya',
-        'Khalibali', 'Brown Munde', 'Lover', 'Excuses', 'Tera Ghata',
-        'Maan Meri Jaan', 'King of Kotha', 'Hukum', 'Chaleya', 'Jhoome Jo Pathaan',
-        'Saami Saami', 'Srivalli', 'Oo Antava', 'Apna Bana Le', 'Pehle Bhi Main',
-        # Punjabi (151-160)
+    """Expanded Database for Music (Western, Indian + Punjabi) - 100 Items"""
+    
+    # 50 Western Songs
+    western_titles = [
+        'Bohemian Rhapsody', 'Shape of You', 'Smells Like Teen Spirit', 'Hotel California', 'Blinding Lights', 'Rolling in the Deep', 'Billie Jean', 'Sicko Mode', 'Imagine', 'Lose Yourself',
+        'Uptown Funk', 'Someone Like You', 'Despacito', 'Believer', 'Starboy', 'Hips Don\'t Lie', 'Viva La Vida', 'Thinking Out Loud', 'Bad Guy', 'Levitating',
+        'As It Was', 'Stay', 'Heat Waves', 'Seven Nation Army', 'Mr. Brightside', 'Sweet Child O\' Mine', 'Wonderwall', 'In The End', 'Numb', 'Boulevard of Broken Dreams',
+        'Thriller', 'Beat It', 'Smooth Criminal', 'Like a Prayer', 'Vogue', 'Toxic', 'Baby One More Time', 'I Want It That Way', 'Bye Bye Bye', 'Umbrella',
+        'Single Ladies', 'Halo', 'Crazy in Love', 'Rolling', 'Empire State of Mind', 'Firework', 'Roar', 'Dark Horse', 'Shake It Off', 'Blank Space'
+    ]
+    
+    # 50 Indian/Punjabi Songs
+    indian_titles = [
+        'Kesariya', 'Jai Ho', 'Naatu Naatu', 'Tum Hi Ho', 'Kun Faya Kun', 'Apna Time Aayega', 'Chaiyya Chaiyya', 'Kabira', 'Kal Ho Naa Ho', 'Pasoori',
+        'Dil Diyan Gallan', 'Raabta', 'Ilahi', 'Agar Tum Saath Ho', 'Channa Mereya', 'Khalibali', 'Brown Munde', 'Lover', 'Excuses', 'Tera Ghata',
+        'Maan Meri Jaan', 'King of Kotha', 'Hukum', 'Chaleya', 'Jhoome Jo Pathaan', 'Saami Saami', 'Srivalli', 'Oo Antava', 'Apna Bana Le', 'Pehle Bhi Main',
         'Softly - Karan Aujla', 'With You - AP Dhillon', '295 - Sidhu Moose Wala', 'Lemonade - Diljit Dosanjh', 'Check It Out - Parmish Verma',
-        'Elevated - Shubh', 'We Rollin - Shubh', 'Summer High - AP Dhillon', 'G.O.A.T. - Diljit Dosanjh', 'So High - Sidhu Moose Wala'
+        'Elevated - Shubh', 'We Rollin - Shubh', 'Summer High - AP Dhillon', 'G.O.A.T. - Diljit Dosanjh', 'So High - Sidhu Moose Wala',
+        'The Last Ride', 'Levels', 'Same Beef', 'Old Skool', 'Daru Badnaam', 'Lahore', 'High Rated Gabru', 'Suit Suit', 'Patiala Peg', '3 Peg'
     ]
 
+    all_titles = western_titles + indian_titles
+    
     items = pd.DataFrame({
-        'item_id': range(101, 161),
-        'title': titles,
-        'features': [
-            # Western
-            'Classic Rock Opera', 'Pop Dance Happy', 'Grunge Rock Energetic', 'Classic Rock Chill', 'Synthwave Pop Night',
-            'Soul Pop Sad', 'Pop Funk Dance', 'Hip-Hop Trap Energetic', 'Piano Pop Calm', 'Hip-Hop Rap Motivational',
-            'Funk Pop Party', 'Soul Ballad Sad', 'Reggaeton Latin Dance', 'Rock Pop Power', 'R&B Pop Dark',
-            'Latin Pop Dance', 'Alt Rock Anthem', 'Acoustic Pop Romance', 'Pop Trap Dark', 'Disco Pop Dance',
-            # Indian
-            'Romantic Bollywood Acoustic', 'Anthem Bollywood Energetic', 'Tollywood Dance High-Energy', 'Romantic Bollywood Sad', 'Sufi Spiritual Calm',
-            'Hip-Hop Rap Gully', 'Folk Bollywood Dance', 'Sufi Folk Soulful', 'Ballad Bollywood Sad', 'Coke Studio Pop Fusion',
-            'Romantic Bollywood Soft', 'Pop Romance Happy', 'Travel Folk Indie', 'Drama Soulful Sad', 'Rock Sufi Heartbreak',
-            'Energy Historic Intense', 'Punjabi Hip-Hop Chill', 'Punjabi Pop Romance', 'Punjabi Pop Party', 'Indie Pop Sad',
-            'Pop Rap Romantic', 'Hip-Hop South Mass', 'Rock Anthem Mass', 'Romantic Bollywood Breeze', 'Dance Bollywood Party',
-            'Folk Dance Mass', 'Melody South Love', 'Item Dance Beats', 'Romantic Arijit Soul', 'Rock Animal Emotional',
-            # Punjabi (Categorized as Indian Region, but distinct features)
-            'Punjabi Pop Smooth', 'Punjabi Romance Pop', 'Punjabi Hip-Hop Real', 'Punjabi Pop Vibes', 'Punjabi Upbeat Party',
-            'Punjabi Rap Flow', 'Punjabi Hip-Hop Trap', 'Punjabi Pop Summer', 'Punjabi Pop Icon', 'Punjabi Gangsta Rap'
-        ],
-        'region': ['Western']*20 + ['Indian']*40, # Punjabi is under Indian for region filtering
-        'link': [get_smart_link(t, 'music') for t in titles]
+        'item_id': range(201, 301),
+        'title': all_titles,
+        'features': ['Western Pop Rock'] * 50 + ['Indian Bollywood Punjabi'] * 50,
+        'region': ['Western'] * 50 + ['Indian'] * 50,
+        'link': [get_smart_link(t, 'music') for t in all_titles]
     })
+    
+    items['features'] = items.apply(lambda x: x['features'] + " Hit", axis=1)
     
     ratings = generate_ratings(items)
     return items, ratings
 
 @st.cache_data
 def load_game_data():
-    """Database for PC Games"""
+    """Database for PC Games - 50 Items"""
     titles = [
         'Grand Theft Auto V', 'The Witcher 3: Wild Hunt', 'Elden Ring', 'Red Dead Redemption 2', 'Cyberpunk 2077',
         'Valorant', 'Counter-Strike 2', 'Call of Duty: Modern Warfare III', 'Apex Legends', 'Overwatch 2',
         'Minecraft', 'Stardew Valley', 'Terraria', 'Hades', 'Hollow Knight',
-        'League of Legends', 'Dota 2', 'Baldur\'s Gate 3', 'Civilization VI', 'Age of Empires IV'
+        'League of Legends', 'Dota 2', 'Baldur\'s Gate 3', 'Civilization VI', 'Age of Empires IV',
+        'God of War', 'Spider-Man Remastered', 'Horizon Zero Dawn', 'Ghost of Tsushima', 'Uncharted 4',
+        'The Last of Us Part I', 'Resident Evil 4 Remake', 'Dead Space', 'Doom Eternal', 'Half-Life 2',
+        'Portal 2', 'Team Fortress 2', 'Left 4 Dead 2', 'Destiny 2', 'Warframe',
+        'Fortnite', 'PUBG: Battlegrounds', 'Rocket League', 'FIFA 24', 'NBA 2K24',
+        'Forza Horizon 5', 'Gran Turismo 7', 'Need for Speed Unbound', 'Assassin\'s Creed Mirage', 'Far Cry 6',
+        'Starfield', 'Fallout 4', 'Skyrim', 'Mass Effect Legendary Edition', 'Bioshock Infinite'
+    ]
+    
+    categories = [
+        'Open World', 'RPG', 'RPG', 'Open World', 'RPG',
+        'Shooter', 'Shooter', 'Shooter', 'Shooter', 'Shooter',
+        'Indie/Sandbox', 'Indie/Sandbox', 'Indie/Sandbox', 'Indie/Sandbox', 'Indie/Sandbox',
+        'Strategy', 'Strategy', 'RPG', 'Strategy', 'Strategy',
+        'Action', 'Action', 'Action', 'Action', 'Action',
+        'Action', 'Horror', 'Horror', 'Shooter', 'Shooter',
+        'Puzzle', 'Shooter', 'Shooter', 'Shooter', 'Shooter',
+        'Shooter', 'Shooter', 'Sports', 'Sports', 'Sports',
+        'Racing', 'Racing', 'Racing', 'Open World', 'Open World',
+        'RPG', 'RPG', 'RPG', 'RPG', 'Shooter'
     ]
     
     items = pd.DataFrame({
-        'item_id': range(201, 221),
+        'item_id': range(401, 451),
         'title': titles,
-        'features': [
-            'Open World Action Crime', 'RPG Open World Fantasy', 'RPG Souls-like Difficult', 'Open World Western Story', 'RPG Sci-Fi Future',
-            'Shooter Tactical Multiplayer', 'Shooter Tactical Competitive', 'Shooter Action War', 'Shooter Battle Royale Fast', 'Shooter Hero Team',
-            'Sandbox Survival Creative', 'Simulation Farming Relaxing', 'Sandbox Adventure 2D', 'Roguelike Action Myth', 'Metroidvania Action Indie',
-            'MOBA Strategy Competitive', 'MOBA Strategy Complex', 'RPG Turn-Based Story', 'Strategy Turn-Based History', 'Strategy RTS History'
-        ],
-        # Using 'region' column to store Game Categories for filtering
-        'region': [
-            'Open World', 'Open World', 'Open World', 'Open World', 'Open World',
-            'Shooter', 'Shooter', 'Shooter', 'Shooter', 'Shooter',
-            'Indie/Sandbox', 'Indie/Sandbox', 'Indie/Sandbox', 'Indie/Sandbox', 'Indie/Sandbox',
-            'Strategy', 'Strategy', 'Strategy', 'Strategy', 'Strategy'
-        ],
+        'features': [c + " Game" for c in categories],
+        'region': categories, 
         'link': [get_smart_link(t, 'game') for t in titles]
     })
     
@@ -298,14 +315,12 @@ class RecommenderEngine:
         self.id_map = {mid: i for i, mid in enumerate(items_df['item_id'])}
         self.reverse_id_map = {i: mid for mid, i in self.id_map.items()}
         
-        # Calculate Average Rating for every item (for filtering)
         if not ratings_df.empty:
             avg_ratings = ratings_df.groupby('item_id')['rating'].mean()
             self.items_df['avg_rating'] = self.items_df['item_id'].map(avg_ratings).fillna(0)
         else:
             self.items_df['avg_rating'] = 0
         
-        # Train models (with safety checks)
         if not self.items_df.empty:
             self.content_sim = self._calculate_content_similarity()
         else:
@@ -314,7 +329,6 @@ class RecommenderEngine:
         self.preds_df, self.sigma = self._calculate_collaborative_filtering()
 
     def _calculate_content_similarity(self):
-        # Crash protection: Check if dataset is empty
         if self.items_df.empty:
             return np.array([])
             
@@ -323,7 +337,6 @@ class RecommenderEngine:
             tfidf_matrix = tfidf.fit_transform(self.items_df['features'])
             return cosine_similarity(tfidf_matrix, tfidf_matrix)
         except ValueError:
-            # Handles "empty vocabulary" error if all words are stop words
             return np.zeros((len(self.items_df), len(self.items_df)))
 
     def _calculate_collaborative_filtering(self):
@@ -333,7 +346,6 @@ class RecommenderEngine:
         R_df = self.ratings_df.pivot(index='user_id', columns='item_id', values='rating').fillna(0)
         R = R_df.values
         
-        # Safety check for SVD
         if R.shape[0] < 2 or R.shape[1] < 2:
              return pd.DataFrame(), np.array([])
 
@@ -373,7 +385,6 @@ class RecommenderEngine:
         sim_scores = list(enumerate(self.content_sim[idx]))
         sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
         
-        # Skip the first one (it is the item itself)
         sim_scores = sim_scores[1:top_n+1]
         
         results = []
@@ -474,14 +485,15 @@ app_mode = st.sidebar.selectbox("Select Domain:", ["🎬 Movies", "🎵 Music", 
 st.sidebar.subheader("🌍 Filters")
 
 # --- DYNAMIC REGION FILTER LOGIC ---
+# UPDATED: Moved emojis BEFORE the text
 if app_mode == "🎬 Movies":
     available_regions = ["All", "🇮🇳 Indian", "🌎 Western", "🇯🇵 Anime"]
     btn_label = "Watch Trailer 🎬"
 elif app_mode == "🎵 Music":
     available_regions = ["All", "🇮🇳 Indian", "🌎 Western"]
-    btn_label = "Play on Spotify 🟢"
+    btn_label = "Play on Spotify 🟢" 
 else: # Games
-    available_regions = ["All", "Shooter", "Open World", "Strategy", "Indie/Sandbox"]
+    available_regions = ["All", "Shooter", "Open World", "Strategy", "Indie/Sandbox", "Action", "RPG", "Sports", "Racing"]
     btn_label = "Watch Trailer 🎬"
 
 # Create the Radio Button
@@ -509,19 +521,15 @@ items_df = full_items_df.copy()
 ratings_df = full_ratings_df.copy()
 
 # Map the UI Labels to Data Labels
+# UPDATED: Keys updated to match the new emoji positions (Emoji First)
 region_map = {
     "🇮🇳 Indian": "Indian",
     "🌎 Western": "Western",
     "🇯🇵 Anime": "Anime",
-    # Games don't use emoji labels, so we can map them to themselves if needed, 
-    # but the simple check below works fine for them.
 }
 
 if region_filter != "All":
-    # 1. Try to get the raw data label from the map (for Movies/Music)
     data_label = region_map.get(region_filter, region_filter)
-    
-    # 2. Filter using the cleaned label
     items_df = full_items_df[full_items_df['region'] == data_label]
 
 # Sync ratings with filtered items
@@ -575,32 +583,28 @@ with col1:
     # CASE: SEARCH
     if rec_strategy == "🔍 Search":
         if search_query:
-            # 1. Find the item
             found_ids = engine.search_items(search_query)
             
             if found_ids:
-                item_id = found_ids[0] # Take first match
-                
-                # Show the Found Item
+                item_id = found_ids[0]
                 match_row = items_df[items_df['item_id'] == item_id].iloc[0]
                 st.success(f"Found Match: **{match_row['title']}**")
                 
                 with st.container():
                      c1, c2, c3 = st.columns([0.1, 0.65, 0.25])
                      c1.markdown("## 🎯")
-                     c2.markdown(f"**{match_row['title']}**")
-                     c2.caption(f"Genre: {match_row['features']}")
+                     with c2:
+                         st.markdown(f"**{match_row['title']}**")
+                         st.caption(f"Genre: {match_row['features']}")
                      c3.link_button(btn_label, match_row['link'])
                      st.divider()
 
-                # 2. Get Similar Items (Content-Based)
                 st.markdown("### ✨ More Like This:")
                 recs = engine.get_similar_items(item_id, top_n=5)
                 
             else:
                 st.warning("No exact matches found. Try a different keyword.")
         else:
-            # Show a message when search is empty
             st.info(f"👆 Type a {item_label.lower()} name above to find similar content!")
             if not items_df.empty:
                 st.markdown("### 🌟 Or check out these Top Rated items:")
@@ -620,15 +624,14 @@ with col1:
     if recs:
         for r in recs:
             with st.container():
-                # Columns: [Icon] [Info] [Score/Link]
                 c_icon, c_info, c_action = st.columns([0.1, 0.65, 0.25])
                 
                 c_icon.markdown("## 📀")
                 
-                c_info.markdown(f"**{r['title']}**")
-                c_info.caption(r['why'])
+                with c_info:
+                    st.markdown(f"**{r['title']}**")
+                    st.caption(r['why'])
                 
-                # Action Column: Rating + Link Button
                 c_action.metric("Avg Rating", f"⭐ {r['avg_rating']:.1f}")
                 c_action.link_button(btn_label, r['link'])
                 
@@ -643,26 +646,20 @@ with col2:
     
     st.markdown("### 🔥 Trending Now")
     if not ratings_df.empty:
-        # 1. Calculate Top 5 Highest Rated Items
         top_rated = ratings_df.groupby('item_id')['rating'].mean().sort_values(ascending=False).head(5)
         top_titles = [engine.item_map.get(i, "Unknown") for i in top_rated.index]
         
-        # Plot: Horizontal Bar Chart
         fig, ax = plt.subplots(figsize=(5, 3))
-        # Ensure plot background is transparent to match container
         fig.patch.set_alpha(0)
-        ax.set_facecolor("none") # FIXED: Use "none" for transparency
+        ax.set_facecolor("none") 
         
-        # Plot bars with bright colors
         sns.barplot(x=top_rated.values, y=top_titles, palette="viridis", ax=ax, hue=top_titles, legend=False)
         
-        # Style Axis Text to be White
         ax.set_xlabel("Average Rating (Stars)", color="white")
         ax.tick_params(axis='x', colors='white')
         ax.tick_params(axis='y', colors='white')
         ax.set_xlim(0, 5.5) 
         
-        # Add values to bars
         for i, v in enumerate(top_rated.values):
             ax.text(v + 0.1, i, f"{v:.1f}", color='white', va='center')
             
@@ -671,13 +668,12 @@ with col2:
         
         st.divider()
 
-        # 2. Rating Distribution Chart
         st.markdown("### 📈 Voting Trends")
         rating_counts = ratings_df['rating'].value_counts().sort_index()
         
         fig2, ax2 = plt.subplots(figsize=(5, 3))
         fig2.patch.set_alpha(0)
-        ax2.set_facecolor("none") # FIXED: Use "none" for transparency
+        ax2.set_facecolor("none") 
         
         sns.barplot(x=rating_counts.index, y=rating_counts.values, palette="rocket", ax=ax2, hue=rating_counts.index, legend=False)
         
