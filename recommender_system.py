@@ -36,7 +36,7 @@ st.markdown("""
     /* 1. Default (PC/Desktop/Tablet) Background */
     .stApp {
         /* Wide Landscape Image */
-        background-image: url("https://wallpapercat.com/w/full/0/a/8/319915-3840x2160-desktop-4k-iron-man-background.jpg");
+        background-image: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop");
         background-attachment: fixed;
         background-size: cover;
         background-position: center center;
@@ -47,7 +47,7 @@ st.markdown("""
     @media only screen and (max-width: 768px) {
         .stApp {
             /* Vertical Portrait Image - Darker & Better for Phones */
-            background-image: url("https://i.pinimg.com/474x/9d/96/84/9d968452bdb775ec7edea0c1bb7af701.jpg?nii=t") !important;
+            background-image: url("https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?q=80&w=1920&auto=format&fit=crop") !important;
             background-attachment: scroll; /* Better scroll performance on mobile */
             background-position: center center;
             background-size: cover;
@@ -689,3 +689,21 @@ with col2:
 
 st.markdown("---")
 st.caption(f"Showing results for {region_filter} Region • {rec_strategy} Mode")
+
+# --- SOCIAL MEDIA FOOTER ---
+st.markdown("""
+    <div style='text-align: center; padding: 20px; background-color: rgba(15, 23, 42, 0.5); border-radius: 10px; margin-top: 30px; border: 1px solid rgba(255, 255, 255, 0.1);'>
+        <p style='margin-bottom: 15px; font-weight: bold; color: #94a3b8 !important;'>Connect with CROMIN:</p>
+        <div style='display: flex; justify-content: center; gap: 30px;'>
+            <a href="https://x.com/Cromin8" target="_blank" style="text-decoration: none; color: #1DA1F2 !important; font-size: 1.1rem; font-weight: bold;">
+                🐦 Twitter
+            </a>
+            <a href="https://www.instagram.com/riteshcromin/?__pwa=1" target="_blank" style="text-decoration: none; color: #E1306C !important; font-size: 1.1rem; font-weight: bold;">
+                📸 Instagram
+            </a>
+            <a href="https://www.youtube.com/@Cromin_Global" target="_blank" style="text-decoration: none; color: #FF0000 !important; font-size: 1.1rem; font-weight: bold;">
+                ▶️ YouTube
+            </a>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
