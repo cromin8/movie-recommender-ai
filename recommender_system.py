@@ -18,20 +18,26 @@ st.set_page_config(page_title="Streamline - AI Recommender", layout="wide", init
 # Custom CSS for a professional look with Background Image
 st.markdown("""
     <style>
-    /* Main Background Image - Responsive Fix */
+    /* --- BACKGROUND SETTINGS --- */
+    
+    /* 1. Default (PC/Desktop/Tablet) Background */
     .stApp {
+        /* Wide Landscape Image */
         background-image: url("https://wallpapercat.com/w/full/0/a/8/319915-3840x2160-desktop-4k-iron-man-background.jpg");
         background-attachment: fixed;
         background-size: cover;
-        background-position: center center; /* Keeps image centered on mobile */
+        background-position: center center;
         background-repeat: no-repeat;
     }
     
-    /* Mobile specific adjustments to prevent background jitter */
-    @media only screen and (max-width: 600px) {
+    /* 2. Mobile Specific Background (Screens smaller than 768px) */
+    @media only screen and (max-width: 768px) {
         .stApp {
-            background-attachment: scroll;
-            background-position: top center;
+            /* Vertical Portrait Image - Darker & Better for Phones */
+            background-image: url("https://img3.wallspic.com/previews/6/2/1/1/8/181126/181126-batman-illustration-superhero-darkness-justice_league-360x640.jpg") !important;
+            background-attachment: scroll; /* Better scroll performance on mobile */
+            background-position: center center;
+            background-size: cover;
         }
     }
     
