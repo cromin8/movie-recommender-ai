@@ -18,11 +18,21 @@ st.set_page_config(page_title="Streamline - AI Recommender", layout="wide", init
 # Custom CSS for a professional look with Background Image
 st.markdown("""
     <style>
-    /* Main Background Image */
+    /* Main Background Image - Responsive Fix */
     .stApp {
         background-image: url("https://wallpapercat.com/w/full/0/a/8/319915-3840x2160-desktop-4k-iron-man-background.jpg");
         background-attachment: fixed;
         background-size: cover;
+        background-position: center center; /* Keeps image centered on mobile */
+        background-repeat: no-repeat;
+    }
+    
+    /* Mobile specific adjustments to prevent background jitter */
+    @media only screen and (max-width: 600px) {
+        .stApp {
+            background-attachment: scroll;
+            background-position: top center;
+        }
     }
     
     /* Main Content Card - Dark Glassmorphism */
