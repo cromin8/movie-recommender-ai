@@ -34,7 +34,7 @@ st.markdown("""
     @media only screen and (max-width: 768px) {
         .stApp {
             /* Vertical Portrait Image - Darker & Better for Phones */
-            background-image: url("https://img3.wallspic.com/previews/6/2/1/1/8/181126/181126-batman-illustration-superhero-darkness-justice_league-360x640.jpg") !important;
+            background-image: url("https://i.pinimg.com/474x/9d/96/84/9d968452bdb775ec7edea0c1bb7af701.jpg?nii=t") !important;
             background-attachment: scroll; /* Better scroll performance on mobile */
             background-position: center center;
             background-size: cover;
